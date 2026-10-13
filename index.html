@@ -75,6 +75,21 @@
       <p>Demo build — side-scroller prototype. Collect upgrades. Raid the village.</p>
     </footer>
   </div>
+  <p id="boot-error" class="boot-error hidden" role="alert"></p>
   <script type="module" src="js/main.js"></script>
+  <script>
+    window.addEventListener("error", function (e) {
+      var el = document.getElementById("boot-error");
+      if (!el) return;
+      el.textContent = "Load error: " + (e.message || "unknown") + ". Try Safari, not an in-app browser.";
+      el.classList.remove("hidden");
+    });
+    window.addEventListener("unhandledrejection", function (e) {
+      var el = document.getElementById("boot-error");
+      if (!el) return;
+      el.textContent = "Load error: " + (e.reason && e.reason.message ? e.reason.message : e.reason);
+      el.classList.remove("hidden");
+    });
+  </script>
 </body>
 </html>

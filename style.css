@@ -134,18 +134,19 @@ body {
 }
 
 .touch-btn {
-  width: 64px;
-  height: 64px;
-  border: 1px solid rgba(232, 168, 74, 0.35);
-  border-radius: 14px;
-  background: rgba(18, 14, 10, 0.62);
+  width: 72px;
+  height: 72px;
+  border: 2px solid rgba(232, 168, 74, 0.55);
+  border-radius: 16px;
+  background: rgba(18, 14, 10, 0.82);
   color: var(--ivory);
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   letter-spacing: 0.04em;
   -webkit-tap-highlight-color: transparent;
   touch-action: none;
   backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
 .touch-btn:active,
@@ -167,11 +168,33 @@ body {
   align-self: flex-end;
 }
 
-/* Touch pad only when the device has coarse pointers (phones/tablets) */
+/* Hide on pure desktop mice unless JS forces them on for touch laptops */
 @media (hover: hover) and (pointer: fine) {
   .touch-pad:not(.force-show) {
     display: none !important;
   }
+}
+
+.touch-pad.force-show:not(.hidden) {
+  display: flex !important;
+}
+
+.boot-error {
+  position: fixed;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 50;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: #5a1810;
+  border: 1px solid #e8a84a;
+  color: #f3e6c8;
+  font-size: 0.9rem;
+}
+
+.boot-error.hidden {
+  display: none;
 }
 
 .overlay {

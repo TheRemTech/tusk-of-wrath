@@ -85,7 +85,20 @@ function cycleWeapon() {
   syncHud();
 }
 
+function isTouchDevice() {
+  return (
+    navigator.maxTouchPoints > 0 ||
+    window.matchMedia("(pointer: coarse)").matches ||
+    "ontouchstart" in window
+  );
+}
+
 function bindTouchControls() {
+  if (isTouchDevice()) {
+    touchPad.classList.add("force-show");
+    document.documentElement.classList.add("is-touch");
+  }
+
   const held = new Map();
 
   const setAction = (action, down) => {
@@ -98,41 +111,74 @@ function bindTouchControls() {
     }
   };
 
-  const onDown = (e) => {
-    const btn = e.target.closest("[data-action]");
-    if (!btn || !touchPad.contains(btn)) return;
-    e.preventDefault();
+  const pressBtn = (btn, id) => {
+    if (!btn || held.has(id)) return;
     const action = btn.dataset.action;
-    held.set(e.pointerId, { action, btn });
+    held.set(id, { action, btn });
     btn.classList.add("is-down");
-    try {
-      btn.setPointerCapture(e.pointerId);
-    } catch {
-      /* ignore */
-    }
     setAction(action, true);
   };
 
-  const onUp = (e) => {
-    const state = held.get(e.pointerId);
+  const releaseId = (id) => {
+    const state = held.get(id);
     if (!state) return;
-    held.delete(e.pointerId);
+    held.delete(id);
     state.btn.classList.remove("is-down");
     if (state.action !== "weapon") setAction(state.action, false);
   };
 
-  touchPad.addEventListener("pointerdown", onDown);
-  touchPad.addEventListener("pointerup", onUp);
-  touchPad.addEventListener("pointercancel", onUp);
-  touchPad.addEventListener("pointerleave", (e) => {
-    if (held.has(e.pointerId)) onUp(e);
-  });
+  // touch* events are more reliable for multi-touch on iPhone Safari
+  touchPad.addEventListener(
+    "touchstart",
+    (e) => {
+      for (const t of e.changedTouches) {
+        const el = document.elementFromPoint(t.clientX, t.clientY);
+        const btn = el && el.closest ? el.closest("[data-action]") : null;
+        if (btn && touchPad.contains(btn)) {
+          e.preventDefault();
+          pressBtn(btn, `t${t.identifier}`);
+        }
+      }
+    },
+    { passive: false }
+  );
 
-  // Stop iOS Safari from scrolling/zooming while playing
-  document.body.addEventListener(
+  const endTouches = (e) => {
+    for (const t of e.changedTouches) releaseId(`t${t.identifier}`);
+  };
+  touchPad.addEventListener("touchend", endTouches);
+  touchPad.addEventListener("touchcancel", endTouches);
+
+  touchPad.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "touch") return; // handled above
+    const btn = e.target.closest("[data-action]");
+    if (!btn || !touchPad.contains(btn)) return;
+    e.preventDefault();
+    pressBtn(btn, `p${e.pointerId}`);
+  });
+  const endPointer = (e) => {
+    if (e.pointerType === "touch") return;
+    releaseId(`p${e.pointerId}`);
+  };
+  touchPad.addEventListener("pointerup", endPointer);
+  touchPad.addEventListener("pointercancel", endPointer);
+
+  // Only block scrolling on the playfield, not the whole page (iOS tap bugs)
+  const stageWrap = document.querySelector(".stage-wrap");
+  stageWrap.addEventListener(
     "touchmove",
     (e) => {
       if (mode === "playing") e.preventDefault();
+    },
+    { passive: false }
+  );
+
+  // iOS: click alone can be flaky inside layered canvases
+  startBtn.addEventListener(
+    "touchend",
+    (e) => {
+      e.preventDefault();
+      startBtn.click();
     },
     { passive: false }
   );
@@ -141,6 +187,7 @@ function bindTouchControls() {
 function setTouchPadVisible(visible) {
   touchPad.classList.toggle("hidden", !visible);
   touchPad.setAttribute("aria-hidden", visible ? "false" : "true");
+  if (visible && isTouchDevice()) touchPad.classList.add("force-show");
 }
 
 let mode = "title"; // title | playing | stageclear | dead | win
