@@ -253,6 +253,7 @@ function loadStage(index) {
   camera.x = 0;
   trucksWrecked = 0;
   bossDown = false;
+  heatKills = 0;
   wanted = stage.id === "village" || stage.id === "highway" ? 1 : 0;
   mode = "playing";
   player.invuln = 1.2;
