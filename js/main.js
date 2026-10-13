@@ -256,7 +256,7 @@ function loadStage(index) {
   heatKills = 0;
   wanted = stage.id === "village" || stage.id === "highway" ? 1 : 0;
   mode = "playing";
-  player.invuln = 1.2;
+  player.invuln = stage.id === "clearing" ? 2.2 : 1.2;
   fx = createFx();
   banner(fx, "MISSION", stage.mission, "mission");
   sfx.mission();
@@ -512,12 +512,14 @@ function update(dt) {
     if (Math.abs(dx) > aggro) e.x += e.facing * (e.speed + wanted * 4) * dt;
 
     e.shootTimer -= dt * (1 + wanted * 0.08);
-    if (e.shootTimer <= 0 && Math.abs(dx) < 440 + wanted * 20) {
+    const range = stage.id === "clearing" ? 320 : 440 + wanted * 20;
+    if (e.shootTimer <= 0 && Math.abs(dx) < range) {
       projectiles.push(createEnemyShot(e));
-      e.shootTimer = e.type === "boss" ? 0.5 : 1.05 + Math.random() * 0.55;
+      e.shootTimer =
+        e.type === "boss" ? 0.5 : stage.id === "clearing" ? 1.5 + Math.random() * 0.7 : 1.05 + Math.random() * 0.55;
     }
     if (aabb(player, e) && player.invuln <= 0) {
-      hurtPlayer(e.type === "boss" ? 18 : 11 + wanted);
+      hurtPlayer(e.type === "boss" ? 18 : stage.id === "clearing" ? 8 : 11 + wanted);
     }
   }
 

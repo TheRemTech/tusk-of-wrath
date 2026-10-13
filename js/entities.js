@@ -77,11 +77,11 @@ export function createEnemyShot(enemy) {
   return {
     x: enemy.facing > 0 ? enemy.x + enemy.w : enemy.x - 8,
     y: enemy.y + 18,
-    vx: enemy.facing * (enemy.type === "boss" ? 340 : 270),
+    vx: enemy.facing * (enemy.type === "boss" ? 340 : 250),
     vy: 0,
     w: 8,
     h: 4,
-    damage: enemy.type === "boss" ? 15 : 9,
+    damage: enemy.type === "boss" ? 15 : 7,
     life: 2,
     color: "#e8c84a",
     kind: "bullet",
