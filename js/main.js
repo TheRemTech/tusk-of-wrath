@@ -185,14 +185,17 @@ function update(dt) {
 
   updatePlayer(player, input, dt, stage, projectiles);
 
-  // Melee resolve
+  // Melee resolve — one strike per swing
   const melee = meleeHitbox(player);
-  if (melee) {
+  if (melee && !player.slamHit) {
+    let connected = false;
     for (const e of enemies) {
       if (e.alive && aabb(melee, e)) {
         damageEnemy(e, WEAPONS.slam.damage, player.facing * WEAPONS.slam.knockback);
+        connected = true;
       }
     }
+    if (connected) player.slamHit = true;
   }
 
   // Enemies

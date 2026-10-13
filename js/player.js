@@ -23,6 +23,7 @@ export function createPlayer(spawn, age = "calf", unlocked) {
     cooldown: 0,
     invuln: 0,
     slamFlash: 0,
+    slamHit: false,
     anim: 0,
   };
 }
@@ -106,7 +107,7 @@ function fireWeapon(player, projectiles) {
   if (id === "slam") {
     player.cooldown = 0.45;
     player.slamFlash = 0.18;
-    player._melee = true;
+    player.slamHit = false;
     return;
   }
   const count = id === "gun" ? 1 : id === "knives" ? 1 : 1;
