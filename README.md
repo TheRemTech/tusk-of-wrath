@@ -1,44 +1,31 @@
-# Tusk of Wrath
+# Grand Theft Ivory
 
-A 2D side-scroller demo: a baby elephant witnesses poachers kill his parents for ivory, grows up in exile, and raids the village that hunted them — unlocking trunk weapons as he goes.
+A baby elephant watches poachers take his parents for ivory — then grows up to rob the whole trade. Browser side-scroller with wanted stars, missions, trunk weapons, convoy trucks, and iPhone touch controls.
 
-## Play
-
-**Live (GitHub Pages):** [https://theremtech.github.io/tusk-of-wrath/](https://theremtech.github.io/tusk-of-wrath/)
-
-Works on iPhone Safari with on-screen touch controls. Landscape recommended. Optional: **Share → Add to Home Screen**.
-
+**Play:** [https://theremtech.github.io/tusk-of-wrath/](https://theremtech.github.io/tusk-of-wrath/)  
 **Repo:** [https://github.com/TheRemTech/tusk-of-wrath](https://github.com/TheRemTech/tusk-of-wrath)
-
-### Run locally
-
-```bash
-python3 -m http.server 8080
-```
-
-Open [http://localhost:8080](http://localhost:8080).
 
 ## Controls
 
 | Desktop | Phone | Action |
 |---------|-------|--------|
-| A / D or ← / → | ◀ ▶ | Move |
-| W / Space / ↑ | Jump | Jump |
-| J or Z | Atk | Attack |
+| A / D | ◀ ▶ | Move |
+| Space / W | Jump | Jump |
+| J | Atk | Attack |
+| K / Shift | Go | Charge (teen+) |
 | 1–4 | Wpn | Switch weapon |
 
-## Demo content
+## Career
 
-1. **The Clearing** — calf escapes hunters; find Trunk Knives  
-2. **The Growing Years** — juvenile training; unlock Machine Gun Trunk  
-3. **Ivory Village** — adult raid; unlock Fire Breath; beat the chief hunter  
+1. **Watering Hole** — escape the hunt  
+2. **Exile Ridge** — train, unlock Machine Gun Trunk  
+3. **Dust Highway** — wreck ivory trucks  
+4. **Ivory Town** — max heat, take down the chief  
 
-Reach the golden flag at the end of each stage to continue.
+Collect knives / gun / fire breath pickups. Cash and best-run score save in the browser.
 
-## Stack
+## Local
 
-Plain HTML / CSS / Canvas ES modules — no build step. Easy to open, tweak, and expand later (more stages, art, sound).
-
-## Scope note
-
-This is a **linear side-scroller prototype**, not a full open world. That keeps the story and combat fantasy playable now; a larger map can come after the core loop feels good.
+```bash
+python3 -m http.server 8080
+```

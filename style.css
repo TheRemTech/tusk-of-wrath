@@ -67,11 +67,19 @@ body {
 .brand h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-size: clamp(2.2rem, 5.5vw, 3.2rem);
   letter-spacing: 0.06em;
   line-height: 0.9;
   color: var(--ivory);
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+.subbrand {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember);
 }
 
 .tagline {
@@ -359,6 +367,46 @@ kbd {
 #stage-name {
   color: #a09078;
   font-size: 0.78rem;
+}
+
+.mission-text {
+  max-width: 280px;
+  color: #9aaa90;
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+.cash {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  color: #5dca7a;
+}
+
+.wanted-stars {
+  display: flex;
+  gap: 0.1rem;
+  margin-top: 0.15rem;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.wanted-stars .star {
+  color: #3a3028;
+  text-shadow: none;
+}
+
+.wanted-stars .star.on {
+  color: #e8a84a;
+  text-shadow: 0 0 8px rgba(232, 168, 74, 0.45);
+}
+
+.touch-charge {
+  width: 60px;
+  height: 60px;
+  font-size: 0.95rem;
+  align-self: flex-end;
+  border-color: rgba(93, 202, 122, 0.55);
 }
 
 .footer {

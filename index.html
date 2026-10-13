@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <title>Tusk of Wrath</title>
+  <title>Grand Theft Ivory</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -17,24 +17,27 @@
     <header class="topbar">
       <div class="brand">
         <span class="brand-mark">◆</span>
-        <h1>Tusk of Wrath</h1>
+        <div>
+          <h1>Grand Theft Ivory</h1>
+          <p class="subbrand">A Tusk of Wrath story</p>
+        </div>
       </div>
-      <p class="tagline">A baby elephant. Stolen ivory. Grown-up revenge.</p>
+      <p class="tagline">Witness. Grow. Rob the ivory trade blind.</p>
     </header>
 
     <main class="stage-wrap">
-      <canvas id="game" width="960" height="540" aria-label="Tusk of Wrath game"></canvas>
+      <canvas id="game" width="960" height="540" aria-label="Grand Theft Ivory game"></canvas>
 
       <div id="overlay" class="overlay">
         <div class="panel" id="panel">
-          <p class="eyebrow" id="panel-eyebrow">Chapter</p>
-          <h2 id="panel-title">Tusk of Wrath</h2>
-          <p id="panel-body">Hunters came for ivory. You watched. You survived. Now you return for the village that took everything.</p>
+          <p class="eyebrow" id="panel-eyebrow">Prologue</p>
+          <h2 id="panel-title">Grand Theft Ivory</h2>
+          <p id="panel-body">Poachers came for tusks. Your parents fell. Grow up, load the trunk, and take the whole trade for a ride.</p>
           <div class="controls-hint">
-            <span class="hint-desktop"><kbd>A</kbd>/<kbd>D</kbd> move · <kbd>Space</kbd> jump · <kbd>J</kbd> attack · <kbd>1</kbd>–<kbd>4</kbd> weapons</span>
-            <span class="hint-touch">On phone: use on-screen ← → , Jump, Attack, and Weapon</span>
+            <span class="hint-desktop"><kbd>A</kbd>/<kbd>D</kbd> move · <kbd>Space</kbd> jump · <kbd>J</kbd> attack · <kbd>K</kbd> charge · <kbd>1</kbd>–<kbd>4</kbd> weapons</span>
+            <span class="hint-touch">Phone: ◀ ▶ · Jump · Atk · Go (charge) · Wpn</span>
           </div>
-          <button id="start-btn" type="button">Begin</button>
+          <button id="start-btn" type="button">Start Career</button>
         </div>
       </div>
 
@@ -48,13 +51,19 @@
             <span class="stat-label">Age</span>
             <strong id="age-label">Calf</strong>
           </div>
+          <div class="stat">
+            <span class="stat-label">Wanted</span>
+            <div id="wanted-stars" class="wanted-stars"></div>
+          </div>
         </div>
         <div class="hud-center">
           <span id="weapon-name">Trunk Slam</span>
-          <span id="stage-name">The Clearing</span>
+          <span id="stage-name">Watering Hole</span>
+          <span id="mission-text" class="mission-text">Mission</span>
         </div>
         <div class="hud-right">
-          <span id="kill-count">0 hunters</span>
+          <span id="cash-count" class="cash">$0</span>
+          <span id="kill-count">0 down</span>
         </div>
       </div>
 
@@ -65,6 +74,7 @@
         </div>
         <div class="touch-cluster touch-actions">
           <button type="button" class="touch-btn touch-weapon" data-action="weapon" aria-label="Switch weapon">Wpn</button>
+          <button type="button" class="touch-btn touch-charge" data-action="charge" aria-label="Charge">Go</button>
           <button type="button" class="touch-btn touch-jump" data-action="jump" aria-label="Jump">Jump</button>
           <button type="button" class="touch-btn touch-attack" data-action="attack" aria-label="Attack">Atk</button>
         </div>
@@ -72,7 +82,7 @@
     </main>
 
     <footer class="footer">
-      <p>Demo build — side-scroller prototype. Collect upgrades. Raid the village.</p>
+      <p>Grand Theft Ivory — browser side-scroller. Open in Safari on iPhone.</p>
     </footer>
   </div>
   <p id="boot-error" class="boot-error hidden" role="alert"></p>

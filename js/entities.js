@@ -2,14 +2,14 @@ import { WEAPONS } from "./weapons.js";
 
 export function createEnemy(def, groundY) {
   const sizes = {
-    hunter: { w: 28, h: 52, color: "#6a4a2a", speed: 55 },
-    guard: { w: 32, h: 56, color: "#4a3a28", speed: 40 },
-    boss: { w: 44, h: 70, color: "#5a2018", speed: 70 },
+    hunter: { w: 28, h: 52, color: "#6a4a2a", speed: 58, payout: 120 },
+    guard: { w: 32, h: 56, color: "#4a3a28", speed: 44, payout: 200 },
+    boss: { w: 48, h: 74, color: "#5a2018", speed: 78, payout: 2500 },
   };
   const s = sizes[def.type] || sizes.hunter;
   return {
     x: def.x,
-    y: def.y ?? groundY - s.h,
+    y: (def.y ?? groundY - s.h),
     w: s.w,
     h: s.h,
     vx: 0,
@@ -18,10 +18,25 @@ export function createEnemy(def, groundY) {
     maxHp: def.hp,
     speed: s.speed,
     color: s.color,
+    payout: s.payout,
     facing: -1,
-    shootTimer: 0.6 + Math.random() * 0.8,
+    shootTimer: 0.5 + Math.random() * 0.9,
     hurtTimer: 0,
     alive: true,
+  };
+}
+
+export function createTruck(def, groundY) {
+  return {
+    x: def.x,
+    y: groundY - 52,
+    w: 110,
+    h: 52,
+    hp: def.hp,
+    maxHp: def.hp,
+    alive: true,
+    bob: Math.random() * 10,
+    payout: 800,
   };
 }
 
@@ -62,11 +77,11 @@ export function createEnemyShot(enemy) {
   return {
     x: enemy.facing > 0 ? enemy.x + enemy.w : enemy.x - 8,
     y: enemy.y + 18,
-    vx: enemy.facing * (enemy.type === "boss" ? 320 : 260),
+    vx: enemy.facing * (enemy.type === "boss" ? 340 : 270),
     vy: 0,
     w: 8,
     h: 4,
-    damage: enemy.type === "boss" ? 14 : 9,
+    damage: enemy.type === "boss" ? 15 : 9,
     life: 2,
     color: "#e8c84a",
     kind: "bullet",
