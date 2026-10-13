@@ -1,5 +1,5 @@
 import { STAGES } from "./levels.js";
-import { WEAPONS } from "./weapons.js";
+import { WEAPONS, WEAPON_ORDER } from "./weapons.js";
 import {
   createEnemy,
   createPickup,
@@ -34,6 +34,7 @@ const ageLabel = document.getElementById("age-label");
 const weaponName = document.getElementById("weapon-name");
 const stageName = document.getElementById("stage-name");
 const killCountEl = document.getElementById("kill-count");
+const touchPad = document.getElementById("touch-pad");
 
 const input = {
   left: false,
@@ -76,6 +77,72 @@ window.addEventListener("keyup", (e) => {
   }
 });
 
+function cycleWeapon() {
+  const owned = WEAPON_ORDER.filter((id) => player.unlocked.has(id));
+  if (owned.length === 0) return;
+  const i = owned.indexOf(player.weapon);
+  player.weapon = owned[(i + 1) % owned.length];
+  syncHud();
+}
+
+function bindTouchControls() {
+  const held = new Map();
+
+  const setAction = (action, down) => {
+    if (action === "left" || action === "right" || action === "jump" || action === "attack") {
+      input[action] = down;
+      return;
+    }
+    if (action === "weapon" && down) {
+      cycleWeapon();
+    }
+  };
+
+  const onDown = (e) => {
+    const btn = e.target.closest("[data-action]");
+    if (!btn || !touchPad.contains(btn)) return;
+    e.preventDefault();
+    const action = btn.dataset.action;
+    held.set(e.pointerId, { action, btn });
+    btn.classList.add("is-down");
+    try {
+      btn.setPointerCapture(e.pointerId);
+    } catch {
+      /* ignore */
+    }
+    setAction(action, true);
+  };
+
+  const onUp = (e) => {
+    const state = held.get(e.pointerId);
+    if (!state) return;
+    held.delete(e.pointerId);
+    state.btn.classList.remove("is-down");
+    if (state.action !== "weapon") setAction(state.action, false);
+  };
+
+  touchPad.addEventListener("pointerdown", onDown);
+  touchPad.addEventListener("pointerup", onUp);
+  touchPad.addEventListener("pointercancel", onUp);
+  touchPad.addEventListener("pointerleave", (e) => {
+    if (held.has(e.pointerId)) onUp(e);
+  });
+
+  // Stop iOS Safari from scrolling/zooming while playing
+  document.body.addEventListener(
+    "touchmove",
+    (e) => {
+      if (mode === "playing") e.preventDefault();
+    },
+    { passive: false }
+  );
+}
+
+function setTouchPadVisible(visible) {
+  touchPad.classList.toggle("hidden", !visible);
+  touchPad.setAttribute("aria-hidden", visible ? "false" : "true");
+}
+
 let mode = "title"; // title | playing | stageclear | dead | win
 let stageIndex = 0;
 let stage = STAGES[0];
@@ -96,12 +163,15 @@ function showPanel({ chapter, title, body, button }) {
   overlay.classList.remove("hidden");
   hud.classList.add("hidden");
   hud.setAttribute("aria-hidden", "true");
+  setTouchPadVisible(false);
+  input.left = input.right = input.jump = input.attack = false;
 }
 
 function hidePanel() {
   overlay.classList.add("hidden");
   hud.classList.remove("hidden");
   hud.setAttribute("aria-hidden", "false");
+  setTouchPadVisible(true);
 }
 
 function loadStage(index) {
@@ -332,5 +402,6 @@ function frame(ts) {
   requestAnimationFrame(frame);
 }
 
+bindTouchControls();
 resetGame();
 requestAnimationFrame(frame);

@@ -9,16 +9,27 @@ A 2D side-scroller demo: a baby elephant witnesses poachers kill his parents for
 python3 -m http.server 8080
 ```
 
-Open [http://localhost:8080](http://localhost:8080).
+Open [http://localhost:8080](http://localhost:8080) on a computer.
+
+### iPhone / iPad (Safari)
+
+The game has on-screen touch controls (move, jump, attack, weapon).
+
+1. On your computer, start the server as above.
+2. Find your computer’s local IP (e.g. `192.168.1.20`).
+3. On the iPhone (same Wi‑Fi), open `http://YOUR_IP:8080` in Safari.
+4. Tip: landscape mode gives more play space. You can also **Share → Add to Home Screen** for a fuller feel.
+
+If the game is only running in a cloud agent, your phone can’t reach that machine — host the folder on GitHub Pages, Netlify, or your own PC first.
 
 ## Controls
 
-| Key | Action |
-|-----|--------|
-| A / D or ← / → | Move |
-| W / Space / ↑ | Jump |
-| J or Z | Attack |
-| 1–4 | Switch weapon (Trunk Slam, Knives, Gun, Fire) |
+| Desktop | Phone | Action |
+|---------|-------|--------|
+| A / D or ← / → | ◀ ▶ | Move |
+| W / Space / ↑ | Jump | Jump |
+| J or Z | Atk | Attack |
+| 1–4 | Wpn | Switch weapon |
 
 ## Demo content
 

@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <title>Tusk of Wrath</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,10 +31,8 @@
           <h2 id="panel-title">Tusk of Wrath</h2>
           <p id="panel-body">Hunters came for ivory. You watched. You survived. Now you return for the village that took everything.</p>
           <div class="controls-hint">
-            <span><kbd>A</kbd>/<kbd>D</kbd> or ←/→ move</span>
-            <span><kbd>W</kbd>/<kbd>Space</kbd> jump</span>
-            <span><kbd>J</kbd> attack</span>
-            <span><kbd>1</kbd>–<kbd>4</kbd> switch weapon</span>
+            <span class="hint-desktop"><kbd>A</kbd>/<kbd>D</kbd> move · <kbd>Space</kbd> jump · <kbd>J</kbd> attack · <kbd>1</kbd>–<kbd>4</kbd> weapons</span>
+            <span class="hint-touch">On phone: use on-screen ← → , Jump, Attack, and Weapon</span>
           </div>
           <button id="start-btn" type="button">Begin</button>
         </div>
@@ -54,6 +55,18 @@
         </div>
         <div class="hud-right">
           <span id="kill-count">0 hunters</span>
+        </div>
+      </div>
+
+      <div id="touch-pad" class="touch-pad hidden" aria-hidden="true">
+        <div class="touch-cluster touch-move">
+          <button type="button" class="touch-btn" data-action="left" aria-label="Move left">◀</button>
+          <button type="button" class="touch-btn" data-action="right" aria-label="Move right">▶</button>
+        </div>
+        <div class="touch-cluster touch-actions">
+          <button type="button" class="touch-btn touch-weapon" data-action="weapon" aria-label="Switch weapon">Wpn</button>
+          <button type="button" class="touch-btn touch-jump" data-action="jump" aria-label="Jump">Jump</button>
+          <button type="button" class="touch-btn touch-attack" data-action="attack" aria-label="Attack">Atk</button>
         </div>
       </div>
     </main>

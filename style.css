@@ -24,17 +24,23 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  min-height: 100dvh;
   background:
     radial-gradient(ellipse 120% 80% at 50% -10%, #2a4a32 0%, transparent 55%),
     linear-gradient(180deg, #0a1a12 0%, #1a120c 45%, #0e0a08 100%);
   color: var(--ivory);
   font-family: var(--font-body);
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 #app {
   max-width: 1040px;
   margin: 0 auto;
   padding: 1.25rem 1rem 2rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
 }
 
 .topbar {
@@ -84,6 +90,9 @@ body {
     0 24px 48px rgba(0, 0, 0, 0.55);
   background: var(--canopy);
   overflow: hidden;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #game {
@@ -93,6 +102,76 @@ body {
   vertical-align: middle;
   background: #0d2818;
   image-rendering: pixelated;
+  touch-action: none;
+}
+
+.hint-touch {
+  display: none;
+}
+
+.touch-pad {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
+  pointer-events: none;
+  z-index: 5;
+}
+
+.touch-pad.hidden {
+  display: none;
+}
+
+.touch-cluster {
+  display: flex;
+  gap: 0.55rem;
+  pointer-events: auto;
+}
+
+.touch-btn {
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(232, 168, 74, 0.35);
+  border-radius: 14px;
+  background: rgba(18, 14, 10, 0.62);
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+  backdrop-filter: blur(4px);
+}
+
+.touch-btn:active,
+.touch-btn.is-down {
+  background: rgba(196, 92, 42, 0.75);
+  border-color: var(--sun);
+}
+
+.touch-jump,
+.touch-attack {
+  width: 72px;
+  height: 72px;
+}
+
+.touch-weapon {
+  width: 56px;
+  height: 56px;
+  font-size: 0.95rem;
+  align-self: flex-end;
+}
+
+/* Touch pad only when the device has coarse pointers (phones/tablets) */
+@media (hover: hover) and (pointer: fine) {
+  .touch-pad:not(.force-show) {
+    display: none !important;
+  }
 }
 
 .overlay {
@@ -291,12 +370,26 @@ kbd {
 }
 
 @media (max-width: 640px) {
+  #app {
+    padding: 0.65rem 0.55rem 1rem;
+  }
+
+  .topbar {
+    margin-bottom: 0.55rem;
+  }
+
+  .brand h1 {
+    font-size: 1.9rem;
+  }
+
   .tagline {
     width: 100%;
+    font-size: 0.82rem;
   }
 
   .hud {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    padding: 0.5rem 0.55rem;
   }
 
   .bar {
@@ -305,5 +398,53 @@ kbd {
 
   .controls-hint {
     font-size: 0.75rem;
+  }
+
+  .hint-desktop {
+    display: none;
+  }
+
+  .hint-touch {
+    display: block;
+  }
+
+  .footer {
+    display: none;
+  }
+
+  .panel {
+    padding: 1.2rem 1rem 1.1rem;
+  }
+
+  .panel h2 {
+    font-size: 1.9rem;
+  }
+
+  .touch-btn {
+    width: 58px;
+    height: 58px;
+  }
+
+  .touch-jump,
+  .touch-attack {
+    width: 68px;
+    height: 68px;
+  }
+}
+
+@media (max-width: 640px) and (orientation: landscape) {
+  .topbar {
+    display: none;
+  }
+
+  .touch-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .touch-jump,
+  .touch-attack {
+    width: 60px;
+    height: 60px;
   }
 }
