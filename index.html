@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tusk of Wrath</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">◆</span>
+        <h1>Tusk of Wrath</h1>
+      </div>
+      <p class="tagline">A baby elephant. Stolen ivory. Grown-up revenge.</p>
+    </header>
+
+    <main class="stage-wrap">
+      <canvas id="game" width="960" height="540" aria-label="Tusk of Wrath game"></canvas>
+
+      <div id="overlay" class="overlay">
+        <div class="panel" id="panel">
+          <p class="eyebrow" id="panel-eyebrow">Chapter</p>
+          <h2 id="panel-title">Tusk of Wrath</h2>
+          <p id="panel-body">Hunters came for ivory. You watched. You survived. Now you return for the village that took everything.</p>
+          <div class="controls-hint">
+            <span><kbd>A</kbd>/<kbd>D</kbd> or ←/→ move</span>
+            <span><kbd>W</kbd>/<kbd>Space</kbd> jump</span>
+            <span><kbd>J</kbd> attack</span>
+            <span><kbd>1</kbd>–<kbd>4</kbd> switch weapon</span>
+          </div>
+          <button id="start-btn" type="button">Begin</button>
+        </div>
+      </div>
+
+      <div id="hud" class="hud hidden" aria-hidden="true">
+        <div class="hud-left">
+          <div class="stat">
+            <span class="stat-label">Health</span>
+            <div class="bar"><div id="hp-fill" class="bar-fill"></div></div>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Age</span>
+            <strong id="age-label">Calf</strong>
+          </div>
+        </div>
+        <div class="hud-center">
+          <span id="weapon-name">Trunk Slam</span>
+          <span id="stage-name">The Clearing</span>
+        </div>
+        <div class="hud-right">
+          <span id="kill-count">0 hunters</span>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>Demo build — side-scroller prototype. Collect upgrades. Raid the village.</p>
+    </footer>
+  </div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
